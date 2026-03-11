@@ -179,4 +179,8 @@ results_copy
 figures
 lib
 weights
+output
 graveyard
+tests
+draft.txt
+repo/SuPreM/direct_inference/pretrained_checkpoints/
