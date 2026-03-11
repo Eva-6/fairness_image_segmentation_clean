@@ -114,7 +114,31 @@ Key file:
 ```preprocess_results.py``` – transforms raw segmentation outputs into the processed vectors and tensors used by the fairness pipeline.
 
 ### generate_data
-This module is used to construct synthetic datasets for controlled fairness experiments.
+This module contains utilities to **generate synthetic segmentation data and visualize fairness properties**.  
+Synthetic experiments allow us to study the behavior of the fairness algorithm in controlled settings where the data-generating process is known.
+
+The synthetic pipeline is mainly used to:
+- simulate segmentation prediction scores and labels,
+- construct fairness scenarios with controllable bias,
+- visualize fairness metrics and subgroup disparities.
+
+Main files:
+
+- **`generate_image.py`**  
+  Generates synthetic segmentation images and associated prediction scores.  
+  The script simulates simple image-like data together with ground-truth labels and prediction values that mimic the behavior of segmentation models.  
+  These synthetic images are used to evaluate the fairness algorithm in a controlled environment before applying it to real medical segmentation outputs.
+
+- **`synthetic_thresholds.py`**  
+  Defines synthetic thresholding rules used to convert prediction scores into segmentation decisions.  
+  This script allows the simulation of different decision policies across groups, making it possible to introduce controlled fairness violations and study how the fairness algorithm corrects them.
+
+- **`visualize_fairness.py`**  
+  Provides visualization utilities for analyzing fairness behavior on the synthetic datasets.  
+  It generates plots illustrating prediction distributions, decision thresholds, and fairness metrics across different groups.
+
+Together, these scripts allow the project to simulate segmentation predictions, apply fairness adjustments, and visualize the resulting fairness-performance trade-offs.
+
 
 ### data_organs
 This directory stores serialized processed datasets used by the fairness algorithm.
