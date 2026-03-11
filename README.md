@@ -31,22 +31,31 @@ The repository contains both:
 fair_segmentation
 
 ├── data_organs                  # Storage of processed data (serialized outputs)
+
 │   └── data_stomach_0.pkl
 
 ├── output                       # Folder used to store experiment outputs
 
 ├── happymap                     # Implementation of the fairness algorithm
+
 │   ├── analysis_results_happymap.py
+
 │   ├── fair_segmentation.py
+
 │   ├── __init__.py
+
 │   ├── metrics.py
+
 │   └── subgroup_metrics_for_image_segmentation.py
 
 ├── preprocess                   # Converts SuPreM raw outputs into vectors (F, G, H, Y)
+
 │   ├── __init__.py
+
 │   └── preprocess_results.py
 
 ├── repo                         # External research repositories used in the project
+
 │   └── SuPreM
 
 ├── results                      # Raw segmentation results from SuPreM on TotalSegmentator
@@ -83,13 +92,13 @@ This includes the logic for:
 Transforms raw segmentation outputs into structured data representations used by the fairness algorithm.
 In particular, it constructs vectors corresponding to:
 
-- model scores $h$
+- model scores $h$, a numpy array of shape (n_samples, n_pixels)
 
-- thresholds $f$
+- thresholds $f$, a numpy array of shape (n_samples,)
 
-- ground-truth labels $y$
+- ground-truth labels $y$, a numpy array of shape (n_samples, n_pixels)
 
-- group attributes $g$
+- group attributes $g$, a numpy array of shape (n_samples,)
 
 These vectors are then used as inputs for the fairness procedure.
 
@@ -108,13 +117,13 @@ External repository implementing methods related to risk-controlled prediction s
 
 ## Running the Project
 1. Install dependencies
-```pip install -r requirements.txt```
+```bash
+pip install -r requirements.txt
+```
 
 2. Generate segmentation outputs
 
-Segmentation logits can be generated using:
-
-```segment_logits.sh```
+Segmentation logits can be generated using: ```segment_logits.sh```
 
 This produces the files stored in the results/ directory.
 
@@ -124,13 +133,15 @@ The preprocessing step converts raw outputs into vectors used by the fairness al
 
 4. Run the fairness algorithm
 
-To run the algorithm on real segmentation outputs:
+To run the algorithm on real segmentation outputs: 
+```bash
+python main.py
+```
 
-```python main.py```
-
-To run experiments on synthetic data:
-
-```python main_fairness_on_synthetic_data.py```
+To run experiments on synthetic data: 
+```bash 
+python main_fairness_on_synthetic_data.py
+```
 
 ## Notes
 
