@@ -1,3 +1,43 @@
+# k-rcps
+scipy
+ml_collections
+scikit-image
+cvxpy
+tqdm
+
+# suprem
+connected-components-3d
+h5py==3.6.0
+monai==0.9.0
+torch==1.11.0
+tqdm
+fastremap
+simpleitk
+ipdb
+matplotlib
+tensorboardX
+ml-collections
+einops
+timm
+elasticdeform
+numpy
 nibabel
+scipy
+pandas
+glob2
+pytorch-lightning==1.6.4
+opencv-python
+
+# rest of the project
+numpy
+pandas
+Pillow
+tqdm
+nibabel
+matplotlib
+seaborn
+scikit-learn
 monai
 wandb
+torch
+torchvision
