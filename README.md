@@ -78,14 +78,23 @@ fair_segmentation
 ## Description of the Main Components
 ### happymap
 
-Contains the core implementation of the fairness algorithm used in the project.
-This includes the logic for:
+The module includes:
 
-- computing subgroup metrics,
+- the main implementation of the fairness algorithm,
 
-- adjusting predictions,
+- utilities for computing segmentation and fairness metrics,
 
-- evaluating fairness-aware performance.
+- analysis tools to study model behavior across subgroups.
+
+Key files:
+
+```fair_segmentation.py``` – main implementation of the fairness adjustment procedure for segmentation outputs.
+
+```metrics.py``` – computation of standard segmentation performance metrics.
+
+```subgroup_metrics_for_image_segmentation.py``` – evaluation of metrics separately for demographic subgroups.
+
+```analysis_results_happymap.py``` – utilities for analyzing and visualizing fairness results.
 
 ### preprocess
 
@@ -98,9 +107,26 @@ In particular, it constructs vectors corresponding to:
 
 - ground-truth labels $y$, a numpy array of shape (n_samples, n_pixels)
 
-- group attributes $g$, a numpy array of shape (n_samples,)
+- group attributes $g$, a numpy array of shape (n_samples,n_groups)
 
-These vectors are then used as inputs for the fairness procedure.
+Key file:
+
+```preprocess_results.py``` – transforms raw segmentation outputs into the processed vectors and tensors used by the fairness pipeline.
+
+### generate_data
+This module is used to construct synthetic datasets for controlled fairness experiments.
+
+### data_organs
+This directory stores serialized processed datasets used by the fairness algorithm.
+
+These files typically contain the outputs of the preprocessing step and allow experiments to be rerun without regenerating all intermediate data from scratch.
+
+Example:data_stomach_0.pkl
+
+### results
+This directory contains the raw segmentation outputs produced by the SuPreM models on the TotalSegmentator dataset.
+
+These outputs are later processed and used as inputs for the fairness analysis.
 
 ### repo / SuPreM
 
@@ -148,3 +174,27 @@ python main_fairness_on_synthetic_data.py
 Some folders in the repository (SuPreM, semantic_uq, k-rcps) correspond to external research projects integrated into the pipeline.
 They are included here to reproduce the experimental environment but are not part of the fairness method implemented in this repository.
 
+## References
+
+### Research Papers
+
+- **Zhun Deng, Cynthia Dwork, and Linjun Zhang.**  
+  *HappyMap: A Generalized Multi-calibration Method.*  
+  arXiv preprint, 2023.  
+  https://arxiv.org/abs/2303.04379
+
+- **Lujing Zhang, Aaron Roth, and Linjun Zhang.**  
+  *Fair Risk Control: A Generalized Framework for Calibrating Multi-group Fairness Risks.*  
+  arXiv preprint, 2024.  
+  https://arxiv.org/abs/2405.02225
+
+### External Repositories
+
+- **SuPreM** – Medical image segmentation framework  
+  https://github.com/MrGiovanni/SuPreM
+
+- **k-rcps** – Risk-controlled prediction sets  
+  https://github.com/Sulam-Group/k-rcps
+
+- **semantic_uq** – Semantic uncertainty quantification tools  
+  https://github.com/Sulam-Group/semantic_uq
