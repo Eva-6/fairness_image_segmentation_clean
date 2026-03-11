@@ -16,7 +16,7 @@ The workflow of the project can be summarized as follows:
 
 2. Preprocess the raw outputs into structured tensors/vectors suitable for fairness analysis.
 
-3. Apply a fairness-aware post-processing algorithm (based on HappyMap ideas).
+3. Apply a fairness-aware post-processing algorithm (based on HappyMap ideas [1]).
 
 4. Evaluate fairness and performance metrics across demographic subgroups.
 
@@ -78,13 +78,7 @@ fair_segmentation
 ## Description of the Main Components
 ### happymap
 
-The module includes:
-
-- the main implementation of the fairness algorithm,
-
-- utilities for computing segmentation and fairness metrics,
-
-- analysis tools to study model behavior across subgroups.
+The module includes the main implementation of the fairness algorithm, utilities for computing segmentation and fairness metrics, analysis tools to study model behavior across subgroups.
 
 Key files:
 
@@ -124,32 +118,18 @@ The synthetic pipeline is mainly used to:
 
 Main files:
 
-- **`generate_image.py`**  
-  Generates synthetic segmentation images and associated prediction scores.  
-  The script simulates simple image-like data together with ground-truth labels and prediction values that mimic the behavior of segmentation models.  
-  These synthetic images are used to evaluate the fairness algorithm in a controlled environment before applying it to real medical segmentation outputs.
+- **`generate_image.py`**: Generates synthetic segmentation images and associated prediction scores.  
 
-- **`synthetic_thresholds.py`**  
-  Defines synthetic thresholding rules used to convert prediction scores into segmentation decisions.  
+- **`synthetic_thresholds.py`**: Defines synthetic thresholding rules used to convert prediction scores into segmentation decisions.  
   This script allows the simulation of different decision policies across groups, making it possible to introduce controlled fairness violations and study how the fairness algorithm corrects them.
 
-- **`visualize_fairness.py`**  
-  Provides visualization utilities for analyzing fairness behavior on the synthetic datasets.  
-  It generates plots illustrating prediction distributions, decision thresholds, and fairness metrics across different groups.
-
-Together, these scripts allow the project to simulate segmentation predictions, apply fairness adjustments, and visualize the resulting fairness-performance trade-offs.
-
+- **`visualize_fairness.py`**: Provides visualization utilities for analyzing fairness behavior on the synthetic datasets.  
 
 ### data_organs
-This directory stores serialized processed datasets used by the fairness algorithm.
-
-These files typically contain the outputs of the preprocessing step and allow experiments to be rerun without regenerating all intermediate data from scratch.
-
-Example:data_stomach_0.pkl
+This directory stores serialized processed datasets used by the fairness algorithm. These files typically contain the outputs of the preprocessing step and allow experiments to be rerun without regenerating all intermediate data from scratch. Example:data_stomach_0.pkl
 
 ### results
 This directory contains the raw segmentation outputs produced by the SuPreM models on the TotalSegmentator dataset.
-
 These outputs are later processed and used as inputs for the fairness analysis.
 
 ### repo / SuPreM
@@ -202,12 +182,12 @@ They are included here to reproduce the experimental environment but are not par
 
 ### Research Papers
 
-- **Zhun Deng, Cynthia Dwork, and Linjun Zhang.**  
+- [1] **Zhun Deng, Cynthia Dwork, and Linjun Zhang.**  
   *HappyMap: A Generalized Multi-calibration Method.*  
   arXiv preprint, 2023.  
   https://arxiv.org/abs/2303.04379
 
-- **Lujing Zhang, Aaron Roth, and Linjun Zhang.**  
+- [2] **Lujing Zhang, Aaron Roth, and Linjun Zhang.**  
   *Fair Risk Control: A Generalized Framework for Calibrating Multi-group Fairness Risks.*  
   arXiv preprint, 2024.  
   https://arxiv.org/abs/2405.02225
