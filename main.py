@@ -25,12 +25,12 @@ if __name__ == "__main__":
     # Preprocess and build the data for stomach without saving (30mn)
     # path_total_segmentator = "/export/gaon1/data/jteneggi/TotalSegmentator"
     path_total_segmentator = "/export/io86/data/jteneggi/TotalSegmentator"
-    # path_results = "/cis/home/ezribi1/my_documents/fair_segmentation/results"
-    path_results = "/cis/home/ezribi1/my_documents/fairness_image_segmentation_clean/results"  # only 10 images for now, just to check that the pipeline works
-    # path_data_organ = "/cis/home/ezribi1/my_documents/fair_segmentation/data_organs"
-    path_data_organ = (
-        "/cis/home/ezribi1/my_documents/fairness_image_segmentation_clean/data_organs"
-    )
+    path_results = "/cis/home/ezribi1/my_documents/fair_segmentation/results"
+    # path_results = "/cis/home/ezribi1/my_documents/fairness_image_segmentation_clean/results"  # only 10 images for now, just to check that the pipeline works
+    path_data_organ = "/cis/home/ezribi1/my_documents/fair_segmentation/data_organs"
+    # path_data_organ = (
+    #     "/cis/home/ezribi1/my_documents/fairness_image_segmentation_clean/data_organs"
+    # )
 
     print("Building data for stomach...")
     dict_stomach = build_data_for_organ(
@@ -121,11 +121,13 @@ if __name__ == "__main__":
     # Evaluate on the test set BEFORE and AFTER correction
     print("\nAnalysis of results")
     print("\nEvaluating metrics before and after correction on test set...")
+    f_test_calibrated = fsb.predict(f_test, groups_test)
     evaluate_metrics_before_after_correction(
         groups_test,
         y_test,
         h_test,
         f_test,
+        f_test_calibrated,  # ← corrected thresholds
         fsb,
         save_path=f"./output/metrics_before_after_stomach_{param_fsb}.pkl",
     )
