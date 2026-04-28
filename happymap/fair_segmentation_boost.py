@@ -6,7 +6,8 @@ from happymap.subgroup_metrics_for_image_segmentation import subgroup_metrics
 
 
 class FairSegmentationBoost:
-    ALLOWED_METRICS = {"FNR", "IoU", "Precision", "Dice", "PixelAccuracy"}
+    ALLOWED_METRICS = {"FNR", "IoU", "Precision", "Dice"}
+    UNALLOWED_METRICS = {"FPR", "PixelAccuracy"}
 
     def __init__(self, metric_name, step_size=0.1):
         assert (
@@ -79,7 +80,7 @@ class FairSegmentationBoost:
 
         return f_t_new
 
-    def fit(self, f, h, y, groups, alpha, tol=1e-4, max_iter=500):
+    def fit(self, f, h, y, groups, alpha, tol=1e-4, max_iter=100):
         """
         Fit the model to the data by adjusting predictions to achieve fair segmentation.
 
