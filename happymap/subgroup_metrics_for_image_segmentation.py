@@ -42,7 +42,6 @@ def subgroup_metrics(
     overall_error = err_fn(f, h, y)  # eg. 1 - global Dice
 
     # 2) worst calibration violation
-    h.shape[0]
     worst_val = 0.0  # initialise max
 
     # for g_idx in range(groups.shape[1]):

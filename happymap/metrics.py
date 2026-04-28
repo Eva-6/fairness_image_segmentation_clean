@@ -33,6 +33,8 @@ def get_error_function(metric_name):
         - float: The average error for the specified metric.
         """
         n_samples = len(h)
+        if n_samples == 0:
+            raise ValueError("error_function received an empty batch.")
         errors = []
 
         for i in range(n_samples):
@@ -47,7 +49,7 @@ def get_error_function(metric_name):
 
             tp = np.sum(pred & gt)
             fp = np.sum(pred & not_gt)
-            np.sum(not_pred & gt)
+            fn = np.sum(not_pred & gt)
             tn = np.sum(not_pred & not_gt)
 
             total_pos = np.sum(gt)
