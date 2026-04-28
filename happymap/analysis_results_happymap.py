@@ -12,7 +12,7 @@ def plot_convergence_algorithm(
     name_task="Stomach",
 ):
     plt.figure(figsize=(8, 5))
-    plt.plot(fsb.global_errs, label="Global Error (IoU)", color="b")
+    plt.plot(fsb.global_errs, label=f"Global Error ({fsb.metric_name})", color="b")
     plt.plot(fsb.violations, label="Max Group Violation", color="r")
     plt.axhline(y=fsb.alpha, color="g", linestyle="--", label="Tolerance Level")
     plt.grid()
