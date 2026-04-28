@@ -132,6 +132,7 @@ celerybeat.pid
 .venv
 env/
 venv/
+venv2/
 ENV/
 env.bak/
 venv.bak/
@@ -177,6 +178,7 @@ data
 data_organs
 results
 results_copy
+results_wrong_param
 figures
 lib
 weights
@@ -185,4 +187,9 @@ graveyard
 tests
 draft.txt
 repo/SuPreM/direct_inference/pretrained_checkpoints/
+repo/SuPreM/direct_inference/inference_version5august.py
+repo/SuPreM/direct_inference/inference_logits_old.py
 bash_history.txt
+main copy.py
+res_ls_tt.txt
+segments_logits_log.log
