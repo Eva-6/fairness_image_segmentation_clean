@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
     # Generate and plot boxplots by groups
     print("\nGenerating and plotting boxplots by groups...")
-    f_val_round = np.round(f_val * fsb.m) / fsb.m
+    f_val_round = np.round(f_val * fsb.M) / fsb.M
     f_val_corrected = fsb.predict(f_val, groups_val)
 
     # plot_groupwise_errors_boxplot(
