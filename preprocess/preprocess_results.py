@@ -69,7 +69,7 @@ def load_predictions_and_labels(
     """
     print("Loading predictions and labels (f,h,y, sample_ids) for organ:", organ)
     sample_ids = sorted([f for f in os.listdir(path_results) if f.startswith("s")])
-    print("sample_ids.shape:", len(sample_ids)) # 1159
+    print("sample_ids.shape:", len(sample_ids))  # 1159
 
     if max_samples is not None:
         n_samples_total = len(sample_ids)
@@ -82,7 +82,9 @@ def load_predictions_and_labels(
     h_list, y_list, filtered_sample_ids = [], [], []
 
     for sid in tqdm(sample_ids):
-        h_path = os.path.join(path_results, sid, "segmentations", f"{organ}_sigmoid.nii.gz")
+        h_path = os.path.join(
+            path_results, sid, "segmentations", f"{organ}_sigmoid.nii.gz"
+        )
         y_path = os.path.join(
             path_total_segmentator, sid, "segmentations", f"{organ}.nii.gz"
         )
@@ -90,7 +92,7 @@ def load_predictions_and_labels(
         if not os.path.exists(h_path):
             print("Missing files for sample_id: ", sid, "h_path:", h_path)
             continue
-        if  not os.path.exists(y_path):
+        if not os.path.exists(y_path):
             print("Missing files for sample_id: ", sid, "y_path:", y_path)
             continue
 
@@ -106,7 +108,16 @@ def load_predictions_and_labels(
     h = np.array(h_list, dtype=object)
     y = np.array(y_list, dtype=object)
     f = np.full((h.shape[0],), 0.5)
-    print("After loop load_predicitons, h.shape:", h.shape, "y.shape:", y.shape, "f.shape:", f.shape, "filtered_sample_ids.shape:", len(filtered_sample_ids)) # 1159
+    print(
+        "After loop load_predicitons, h.shape:",
+        h.shape,
+        "y.shape:",
+        y.shape,
+        "f.shape:",
+        f.shape,
+        "filtered_sample_ids.shape:",
+        len(filtered_sample_ids),
+    )  # 1159
 
     return f, h, y, filtered_sample_ids
 
@@ -140,11 +151,20 @@ def build_data_for_organ(
     f, h, y, sample_ids = load_predictions_and_labels(
         path_results, path_total_segmentator, organ, max_samples=max_samples
     )
-    print("f.shape:", f.shape, "h.shape:", h.shape, "y.shape:", y.shape, "sample_ids.shape:", len(sample_ids)) # 0 : bug comes from here
+    print(
+        "f.shape:",
+        f.shape,
+        "h.shape:",
+        h.shape,
+        "y.shape:",
+        y.shape,
+        "sample_ids.shape:",
+        len(sample_ids),
+    )  # 0 : bug comes from here
     g, g_ids, group_names = load_groups_from_csv(
         path_total_segmentator + "/meta.csv", group_columns
     )
-    print("g.shape:", g.shape) #  (1226, 7)
+    print("g.shape:", g.shape)  #  (1226, 7)
 
     id_to_index = {sid: i for i, sid in enumerate(sample_ids)}
     common_ids = [sid for sid in g_ids if sid in id_to_index]
@@ -169,6 +189,11 @@ def build_data_for_organ(
     print("\tShape of y:", dict_organ["y"].shape)
     print("\tShape of g:", dict_organ["g"].shape)
     print("\tgroup names:", group_names)
+
+    print("\n\tSamples per group:")
+    for i, group_name in enumerate(group_names):
+        n_group = int(dict_organ["g"][:, i].sum())
+        print(f"\t- {group_name}: {n_group} samples")
 
     if save_path:
         print("Saving the data for stomach...")
