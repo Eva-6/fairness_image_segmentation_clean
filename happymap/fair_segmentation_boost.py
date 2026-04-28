@@ -18,7 +18,7 @@ class FairSegmentationBoost:
         self.step_size = step_size  # Default step size for now
         self.adjustments = None
 
-    def _find_max_patch(self, f, h, y, groups):
+    def _find_max_patch(self, f, h, y, groups):  # correct
         """
         Find the group with maximum calibration error.
         Returns worst_g that maximizes E[s(v,h,y) * 1_{g(x)=1}]
@@ -62,7 +62,7 @@ class FairSegmentationBoost:
 
         return worst_g
 
-    def _update_predictions(self, f_t, g_t, groups):
+    def _update_predictions(self, f_t, g_t, groups):  # correct
         # Copy the predictions to avoid modifying the original array
         f_t_new = f_t.copy()
 
@@ -80,7 +80,7 @@ class FairSegmentationBoost:
 
         return f_t_new
 
-    def fit(self, f, h, y, groups, alpha, tol=1e-4, max_iter=100):
+    def fit(self, f, h, y, groups, alpha, tol=1e-4, max_iter=20):  # correct
         """
         Fit the model to the data by adjusting predictions to achieve fair segmentation.
 
@@ -89,7 +89,7 @@ class FairSegmentationBoost:
         - h: ndarray of shape (n_samples, n_pixels) - Scoring functions.
         - y: ndarray of shape (n_samples, n_pixels) - True labels.
         - groups: ndarray of shape (n_samples, n_groups) - Group indicators.
-        - alpha: float - The desired calibration level.
+        - alpha: float - The desired calibration level which should bound P(A)·E[s|A].
         - tol: float - Tolerance for stopping criteria.
 
         Returns:
