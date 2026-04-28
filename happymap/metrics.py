@@ -18,8 +18,8 @@ def get_error_function(metric_name):
     """
 
     def safe_div(numer, denom, fill_value=0.0):
-        if denom==0:
-            return None
+        if denom == 0:
+            return fill_value
         return np.divide(numer, denom)
 
     def error_function(lambda_vec, h, y):
@@ -56,14 +56,11 @@ def get_error_function(metric_name):
             total_union = np.sum(gt | pred)
             total_pixels = h_i.size
 
-
-
             if metric_name == "FNR":
                 recall = safe_div(tp, total_pos, fill_value=1.0)
                 errors.append(1 - recall)
 
                 # print("DEBUG: ",metric_name,"i=",i, "FNR=",1-recall, "\ttp=", tp, "\tfp:", fp, "\ttotal_pos:", total_pos, "\ttotal_neg:", total_neg, "\ttotal_pred", total_pred, "\ttotal_union:", total_union)
-
 
             elif metric_name == "FPR":
                 errors.append(safe_div(fp, total_neg, fill_value=0.0))
@@ -89,10 +86,12 @@ def get_error_function(metric_name):
                 raise ValueError(f"Unsupported metric_name '{metric_name}'")
 
         return np.mean(errors)
-    
+
     return error_function
 
+
 import numpy as np
+
 
 def compute_tpr(logits, thresholds, y):
     """
@@ -108,7 +107,7 @@ def compute_tpr(logits, thresholds, y):
         thr = thresholds if np.isscalar(thresholds) else thresholds[i]
         pred = logits[i] >= thr
 
-        gt_pos = (y[i] == 1)  # true positives in GT
+        gt_pos = y[i] == 1  # true positives in GT
         tp = np.sum(pred & gt_pos)
         fn = np.sum(~pred & gt_pos)
 
@@ -128,6 +127,7 @@ def _flatten_if_needed(arr):
         return arr.reshape(arr.shape[0], -1)
     return arr
 
+
 def get_group_sizes(groups, group_names):
     group_sizes = np.zeros(groups, dtype=float)
 
@@ -138,7 +138,9 @@ def get_group_sizes(groups, group_names):
 
     return group_sizes
 
+
 import numpy as np
+
 
 def compute_fpr(logits, thresholds, y):
     """
@@ -154,7 +156,7 @@ def compute_fpr(logits, thresholds, y):
         thr = thresholds if np.isscalar(thresholds) else thresholds[i]
         pred = logits[i] >= thr
 
-        gt_neg = (y[i] == 0)  # true negatives in GT
+        gt_neg = y[i] == 0  # true negatives in GT
         fp = np.sum(pred & gt_neg)
         tn = np.sum(~pred & gt_neg)
 
@@ -166,6 +168,7 @@ def compute_fpr(logits, thresholds, y):
         fprs.append(fpr_i)
 
     return np.mean(fprs)
+
 
 def compute_group_errors_weighted(
     masks, logits, groups, thresholds, metric_name, group_names
