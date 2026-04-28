@@ -82,7 +82,7 @@ def load_predictions_and_labels(
     h_list, y_list, filtered_sample_ids = [], [], []
 
     for sid in tqdm(sample_ids):
-        h_path = os.path.join(path_results, sid, "segmentations", f"{organ}.nii.gz")
+        h_path = os.path.join(path_results, sid, "segmentations", f"{organ}_sigmoid.nii.gz")
         y_path = os.path.join(
             path_total_segmentator, sid, "segmentations", f"{organ}.nii.gz"
         )
