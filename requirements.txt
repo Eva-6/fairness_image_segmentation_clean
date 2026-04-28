@@ -8,8 +8,10 @@ tqdm
 # suprem
 connected-components-3d
 h5py==3.6.0
-monai==0.9.0
-torch==1.11.0
+# monai==0.9.0
+monai==1.3.0
+# torch==1.11.0
+torch==2.4.1 # pip install torch==2.4.1 torchvision==0.19.1 --index-url https://download.pytorch.org/whl/cu124
 tqdm
 fastremap
 simpleitk
@@ -20,24 +22,24 @@ ml-collections
 einops
 timm
 elasticdeform
-numpy
+# numpy
+numpy < 2
 nibabel
 scipy
 pandas
 glob2
-pytorch-lightning==1.6.4
+pytorch-lightning
 opencv-python
 
 # rest of the project
-numpy
+# numpy
 pandas
 Pillow
-tqdm
+# tqdm
 nibabel
 matplotlib
 seaborn
 scikit-learn
-monai
+# monai
 wandb
-torch
 torchvision
