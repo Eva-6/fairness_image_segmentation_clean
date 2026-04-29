@@ -80,7 +80,7 @@ class FairSegmentationBoost:
 
         return f_t_new
 
-    def fit(self, f, h, y, groups, alpha, tol=1e-4, max_iter=20):  # correct
+    def fit(self, f, h, y, groups, alpha, tol=1e-4, max_iter=70):  # correct
         """
         Fit the model to the data by adjusting predictions to achieve fair segmentation.
 
@@ -130,6 +130,11 @@ class FairSegmentationBoost:
             worst_violation = group_metrics["max"]["VIOLATION"]
             violations.append(worst_violation)
             t += 1
+
+            # Add inside the while loop, after updating worst_violation:
+            if len(violations) >= 2 and abs(violations[-2] - violations[-1]) < tol:
+                print("Converged (violation change < tol)")
+                break
 
         print(f"\nModel fitting complete after {t} round(s)")
         self.alpha = alpha

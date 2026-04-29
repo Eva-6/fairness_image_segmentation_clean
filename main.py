@@ -96,10 +96,22 @@ if __name__ == "__main__":
         sample_ids[idx_test],
     )
 
+    # Estimate the baseline violation before choosing the alpha parameter correction
+    baseline = subgroup_metrics(groups_train, y_train, h_train, f_train, "IoU")
+    print(f"Baseline worst violation (P(A)·E[s|A]): {baseline['max']['VIOLATION']:.4f}")
+    print(f"Baseline global error:                   {baseline['agg']['ERR']:.4f}")
+    # Set alpha ~ 50–70% of the baseline violation
+    alpha = 0.7 * baseline["max"]["VIOLATION"]
+    print(
+        f"Setting alpha (tolerance level) to: {alpha:.4f} (70% of baseline violation, aims to reduce the worst group violation by 30%)"
+    )
+
     # Initialize and fit the algorithm
     print("\nFitting FairSegmentationBoost...")
-    fsb = FairSegmentationBoost(metric_name="IoU", step_size=0.1)
-    alpha = 0.3
+    fsb = FairSegmentationBoost(
+        metric_name="IoU", step_size=0.01
+    )  # step size not too big because irreversible changes
+    # alpha = 0.3
     param_fsb = f"(alpha={alpha}, step_size={fsb.step_size},n={len(f_all)})"
 
     t_start_fit = time.time()
